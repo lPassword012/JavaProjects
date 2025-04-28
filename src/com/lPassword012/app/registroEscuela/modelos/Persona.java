@@ -1,49 +1,56 @@
-package com.lPassword012.app.registroAlumno.modelos;
-import com.lPassword012.app.registroAlumno.interfaz.Entrada;
+package com.lPassword012.app.registroEscuela.modelos;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.lPassword012.app.registroEscuela.interfaz.Entrada;
 
-public class Persona {
-    private int id = 1;
+public abstract class Persona {
+    private static int contadorId = 0;
+    private int id;
     private String nombre;
     private int edad;
-    private String profesion;
-    private List<String> listaPersonas = new ArrayList<>();
-
-    Entrada entrada = new Entrada();
+    protected String rol; // Nuevo campo para diferenciar el tipo
 
     public Persona() {
-
+        this.id = ++contadorId;
     }
 
+    // Metodo abstracto para ser implementado por subclases
+    public abstract void mostrarDetalles();
+
+    // Getters y Setters
+    public int getId() {
+        return id;
+    }
     public String getNombre() {
-        return this.nombre;
+        return nombre;
     }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
     public int getEdad() {
-        return this.edad;
+        return edad;
     }
-
     public void setEdad(int edad) {
         this.edad = edad;
     }
+    public String getRol() {
+        return rol;
+    }
 
-    public void generarNuevaPersona(){
-        String nombre;
-        int edad;
-        System.out.println("\nEsperando ingreso de datos");
-        System.out.println("Ingresar nombre");
-        nombre = entrada.ingresarNombre();
-        setNombre(nombre);
-        listaPersonas.add(id, getNombre());
-        System.out.println("Ingresar edad");
-        edad = entrada.ingresarEdad();
-        setEdad(edad);
-        System.out.println("Entrada de datos finalizado.");
+    // Este metodo para crear un usuario (debe ser manejado por subclases)
+    public static Persona generarNuevaPersona(Entrada entrada) {
+        System.out.println("\nTipo de usuario:\n1. Alumno\n2. Profesor\n3. Rector");
+        int tipo = entrada.ingresarEntero("Seleccione una opción: ");
+
+        System.out.println("Ingresar nombre:");
+        String nombre = entrada.ingresarNombre();
+        System.out.println("Ingresar edad:");
+        int edad = entrada.ingresarEdad();
+
+        switch (tipo) {
+            case 1: return new Alumno(nombre, edad);
+            case 2: return new Profesor(nombre, edad);
+            case 3: return new Rector(nombre, edad);
+            default: throw new IllegalArgumentException("Opción inválida. Intente otra vez.");
+        }
     }
 }

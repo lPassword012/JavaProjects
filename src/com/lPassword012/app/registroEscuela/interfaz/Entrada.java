@@ -1,45 +1,65 @@
-package com.lPassword012.app.registroAlumno.interfaz;
+package com.lPassword012.app.registroEscuela.interfaz;
 
 import java.util.Scanner;
 
 public class Entrada {
-
-    private String teclado;
-
-    Scanner entrada = new Scanner(System.in);
-
-    public Entrada() {
-
-    }
-
-    public String getTeclado() {
-        return this.teclado;
-    }
-
-    public void setTeclado(String teclado) {
-        this.teclado = teclado;
-    }
+    private Scanner scanner = new Scanner(System.in);
 
     public String ingresarNombre() {
-        setTeclado(entrada.nextLine());
-        if (getTeclado() != null) {
-            if (getTeclado() instanceof String) {
-                System.out.println("\nRegistrado en la base de datos " + "nuevo usuario: " + getTeclado() + "\n");
-                return getTeclado();
-            }
-        } else {
-            System.out.println("\nError, intente otra vez.");
-            System.out.println("\nIngresar nombre del usuario ");
-            setTeclado(entrada.nextLine());
+        System.out.print("Nombre: ");
+        String nombre = scanner.nextLine();
+        while (nombre.trim().isEmpty()) {
+            System.out.println("Error! Ingrese un nombre válido:");
+            nombre = scanner.nextLine();
         }
-        return getTeclado();
+        return nombre;
     }
 
     public int ingresarEdad() {
-        int edad;
-        setTeclado(entrada.nextLine());
-        edad = Integer.parseInt(getTeclado());
-        System.out.println("Registrado en la base de datos " + "Edad: " + edad + "\n");
-        return edad;
+        while (true) {
+            try {
+                System.out.print("Edad: ");
+                int edad = Integer.parseInt(scanner.nextLine());
+                if (edad <= 0) {
+                    System.out.println("Error! La edad debe ser un número positivo.");
+                    continue;
+                }
+                return edad;
+            } catch (NumberFormatException e) {
+                System.out.println("Error! Ingrese un número válido.");
+            }
+        }
+    }
+
+    public double ingresarCalificacion() {
+        while (true) {
+            try {
+                System.out.print("Calificación (0-10): ");
+                double calificacion = Double.parseDouble(scanner.nextLine());
+                if (calificacion < 0 || calificacion > 10) {
+                    System.out.println("Error! La calificación debe estar entre 0 y 10.");
+                    continue;
+                }
+                return calificacion;
+            } catch (NumberFormatException e) {
+                System.out.println("Error! Ingrese un número válido.");
+            }
+        }
+    }
+
+    public String ingresarTexto(String mensaje) {
+        System.out.print(mensaje);
+        return scanner.nextLine();
+    }
+
+    public int ingresarEntero(String mensaje) {
+        while (true) {
+            try {
+                System.out.print(mensaje);
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Error! Ingrese un número válido.");
+            }
+        }
     }
 }

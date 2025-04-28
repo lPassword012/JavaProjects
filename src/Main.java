@@ -1,10 +1,9 @@
-import com.lPassword012.app.screenMatch.modelos.Pelicula;
+import com.lPassword012.app.registroEscuela.interfaz.Menu;
 
-public class Principal {
+public class Main {
     public static void main(String[] args) {
-        Pelicula primeraPelicula = new Pelicula("Harry Potter y la piedra filosofal","29/11/2001",152,"si",1800);
-
-        primeraPelicula.mostrarDetallesPelicula();
-        primeraPelicula.modificarDetallesPelicula("Harry Potter y la piedra filosofal 2", "30/12/2001",250,"no",2600);
+        Menu menu = new Menu();
+        System.out.println("\n=== Bienvenido al Sistema de Registro Escolar ===");
+        menu.mostrarMenu();
     }
 }
